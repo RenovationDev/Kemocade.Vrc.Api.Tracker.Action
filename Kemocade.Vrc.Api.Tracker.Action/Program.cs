@@ -268,12 +268,15 @@ try
         }
 
         // Map Group Members to Roles
-        Dictionary<string, string[]> groupDisplayNamesToVrcRoleIds =
-            groupMembers.ToDictionary
-            (
-                m => m.User.DisplayName,
-                m => m.RoleIds.ToArray()
-            );
+     Dictionary<string, string[]> groupDisplayNamesToVrcRoleIds =
+    groupMembers
+        .GroupBy(m => m.User.DisplayName)
+        .Select(g => g.First())
+        .ToDictionary
+        (
+            m => m.User.DisplayName,
+            m => m.RoleIds.ToArray()
+        );
 
         // Get All Group Roles
         WriteLine("Getting Group Roles...");
